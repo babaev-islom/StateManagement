@@ -58,27 +58,6 @@ final class ContentViewAdapter {
             
             self.viewModel.didLoad(contentViewModelItems)
         }
-//        loader.loadItems { [weak self] items in
-//            guard let self = self else { return }
-//
-//            let contentViewModelItems = items.map { model in
-//                let viewModel = ContentSelectionViewModel(isLiked: model.isLiked)
-//                let adapter = LikeAdapter(loader: self.likeLoader, viewModel: viewModel)
-//
-//                let item = ContentItem(
-//                        id: model.id,
-//                        title: model.title,
-//                        isLiked: model.isLiked,
-//                        selection: { [adapter] in
-//                            adapter.didLikeItem(model: model)
-//                        }
-//                    )
-//
-//                return ContentViewModelItem(model: item, viewModel: viewModel)
-//            }
-//
-//            self.viewModel.didLoad(contentViewModelItems)
-//        }
     }
 }
 

@@ -14,6 +14,7 @@ struct LikeButtonView: View {
     var body: some View {
         HStack {
             Text(item.title)
+                .foregroundColor(.white)
             
             Spacer()
             
@@ -21,6 +22,7 @@ struct LikeButtonView: View {
                 if viewModel.isLoading {
                     ProgressView()
                         .progressViewStyle(.circular)
+                        .tint(.white)
                         .frame(width: 48, height: 48)
                 } else {
                     Button {

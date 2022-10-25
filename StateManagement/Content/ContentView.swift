@@ -8,27 +8,81 @@
 import SwiftUI
 
 struct ContentView: View {
+#warning("It doubts me to reference two view models at the same time, but I don't want to keep sheet state management in `ContentViewModel`")
     @ObservedObject var viewModel: ContentViewModel
+    @ObservedObject var sheetViewModel: SheetPresentingViewModel
     let onViewAppear: () -> Void
     
     var body: some View {
-        LazyVStack {
-            if let state = viewModel.state {
-                switch state {
-                case .loading:
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .foregroundColor(.green)
+        ZStack {
+            Color.black
+            
+            contentView
+            
+            if sheetViewModel.isShowingBottomSheet {
+                emptyPlaceholderView
                 
-                case let .loaded(items):
-                    ForEach(items) { item in
-                        #warning("It doubts me that `ContentViewModel` knows about `ContentViewModelItem` and as a result about`ContentItem` and `LikeViewModel`")
-                        LikeButtonView(item: item.model, viewModel: item.viewModel)
+                closeButton
+            }
+        }
+        .edgesIgnoringSafeArea(.all)
+        .onAppear(perform: onViewAppear)
+    }
+    
+    private var contentView: some View {
+        VStack {
+            Button {
+                withAnimation {
+                    sheetViewModel.showSheet()
+                }
+            } label: {
+                Image(systemName: "togglepower")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+            }
+            .padding(.bottom, 20)
+            
+            LazyVStack {
+                if let state = viewModel.state {
+                    switch state {
+                    case .loading:
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(.white)
+                            .frame(width: 48, height: 48)
+
+                    case let .loaded(items):
+                        ForEach(items) { item in
+                            #warning("It doubts me that `ContentViewModel` knows about `ContentViewModelItem` and as a result about`ContentItem` and `LikeViewModel`")
+                            LikeButtonView(item: item.model, viewModel: item.viewModel)
+                        }
                     }
                 }
             }
         }
-        .onAppear(perform: onViewAppear)
+        .opacity(sheetViewModel.isShowingBottomSheet ? 0.25 : 1)
+    }
+    
+    private var emptyPlaceholderView: some View {
+        Color.black.opacity(0.001)
+            .onTapGesture {
+                withAnimation {
+                    sheetViewModel.hideSheet()
+                }
+            }
+    }
+    
+    private var closeButton: some View {
+        Button {
+            withAnimation {
+                sheetViewModel.hideSheet()
+            }
+        } label: {
+            Image(systemName: "xmark.square.fill")
+                .resizable()
+                .frame(width: 50, height: 50)
+        }
+        .padding(.bottom, 50)
     }
 }
 

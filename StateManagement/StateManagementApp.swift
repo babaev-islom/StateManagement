@@ -25,9 +25,11 @@ class ContentViewFactory {
         let loader = ContentLoader()
         let likeLoader = LikeLoader()
         let viewModel = ContentViewModel()
+        let sheetViewModel =  SheetPresentingViewModel()
         let adapter = ContentViewAdapter(loader: loader, likeLoader: likeLoader, viewModel: viewModel)
         return ContentView(
             viewModel: viewModel,
+            sheetViewModel: sheetViewModel, 
             onViewAppear: {
                 adapter.loadData()
             }

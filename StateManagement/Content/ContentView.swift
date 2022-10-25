@@ -22,6 +22,7 @@ struct ContentView: View {
                 
                 case let .loaded(items):
                     ForEach(items) { item in
+                        #warning("It doubts me that `ContentViewModel` knows about `ContentViewModelItem` and as a result about`ContentItem` and `LikeViewModel`")
                         LikeButtonView(item: item.model, viewModel: item.viewModel)
                     }
                 }

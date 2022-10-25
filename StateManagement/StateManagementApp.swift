@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 //let loader = Loader()
 //let likeLoader = LikeLoader()

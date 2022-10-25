@@ -7,18 +7,11 @@
 
 import SwiftUI
 
-//let loader = Loader()
-//let likeLoader = LikeLoader()
-//let viewModel = ContentViewModel()
-//let adapter = Adapter(loader: loader, likeLoader: likeLoader, viewModel: viewModel)
-
 @main
 struct StateManagementApp: App {
 
     var body: some Scene {
         WindowGroup {
-        
-//            ContentView(viewModel: viewModel, onViewAppear: adapter.loadData)
             ContentViewFactory.makeContentview()
         }
     }

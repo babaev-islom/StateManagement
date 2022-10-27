@@ -7,19 +7,15 @@
 
 import Foundation
 
-class LikeLoader {
-    func setModelAsLiked(id: UUID, completion: @escaping (Result<Void, Error>) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            completion(.success(()))
-        }
-    }
+protocol LikeLoader {
+    func setModelAsLiked(id: UUID) async throws
 }
 
-extension LikeLoader {
+class LikeLoaderStub: LikeLoader {
     func setModelAsLiked(id: UUID) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            setModelAsLiked(id: id) { result in
-                continuation.resume(with: result)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                continuation.resume(with: .success(()))
             }
         }
     }

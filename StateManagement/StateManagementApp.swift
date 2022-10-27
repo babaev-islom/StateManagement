@@ -22,8 +22,8 @@ class ContentViewFactory {
     
     @MainActor
     static func makeContentview() -> ContentView {
-        let loader = ContentLoader()
-        let likeLoader = LikeLoader()
+        let loader = ContentLoaderStub()
+        let likeLoader = LikeLoaderStub()
         let viewModel = ContentViewModel()
         let sheetViewModel =  SheetPresentingViewModel()
         let adapter = ContentViewAdapter(loader: loader, likeLoader: likeLoader, viewModel: viewModel)

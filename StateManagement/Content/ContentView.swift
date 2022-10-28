@@ -20,13 +20,13 @@ struct ContentView: View {
             contentView
             
             if sheetViewModel.isShowingBottomSheet {
-                emptyPlaceholderView
-                
-                closeButton
+                transparentSheet
+                    .id(1)
             }
         }
         .edgesIgnoringSafeArea(.all)
         .onAppear(perform: onViewAppear)
+        .id(55)
     }
     
     private var contentView: some View {
@@ -41,6 +41,7 @@ struct ContentView: View {
                     .frame(width: 50, height: 50)
             }
             .padding(.bottom, 20)
+            .id(0)
             
             LazyVStack {
                 if let state = viewModel.state {
@@ -55,12 +56,22 @@ struct ContentView: View {
                         ForEach(items) { item in
                             #warning("It doubts me that `ContentViewModel` knows about `ContentViewModelItem` and as a result about`ContentItem` and `LikeViewModel`")
                             LikeButtonView(item: item.model, viewModel: item.viewModel)
-                        }
+                        }.id(11)
                     }
                 }
-            }
+            }.id(10)
         }
         .opacity(sheetViewModel.isShowingBottomSheet ? 0.25 : 1)
+    }
+    
+    private var transparentSheet: some View {
+        Group {
+            emptyPlaceholderView
+                .id(3)
+            
+            closeButton
+                .id(2)
+        }
     }
     
     private var emptyPlaceholderView: some View {

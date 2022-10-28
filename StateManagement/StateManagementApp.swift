@@ -12,7 +12,10 @@ struct StateManagementApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentViewFactory.makeContentview()
+            ContentViewFactory.makeContentview(
+                contentLoader: ContentLoaderStub(),
+                likeLoader: LikeLoaderStub()
+            )
         }
     }
 }
@@ -21,12 +24,10 @@ class ContentViewFactory {
     private init() {}
     
     @MainActor
-    static func makeContentview() -> ContentView {
-        let loader = ContentLoaderStub()
-        let likeLoader = LikeLoaderStub()
+    static func makeContentview(contentLoader: ContentLoader, likeLoader: LikeLoader) -> ContentView {
         let viewModel = ContentViewModel()
         let sheetViewModel =  SheetPresentingViewModel()
-        let adapter = ContentViewAdapter(loader: loader, likeLoader: likeLoader, viewModel: viewModel)
+        let adapter = ContentViewAdapter(loader: contentLoader, likeLoader: likeLoader, viewModel: viewModel)
         return ContentView(
             viewModel: viewModel,
             sheetViewModel: sheetViewModel, 

@@ -24,6 +24,7 @@ struct LikeButtonView: View {
                         .progressViewStyle(.circular)
                         .tint(.white)
                         .frame(width: 48, height: 48)
+                        .id(0)
                 } else {
                     Button {
                         item.selection()
@@ -32,6 +33,7 @@ struct LikeButtonView: View {
                             .resizable()
                             .frame(width: 48, height: 48)
                     }
+                    .id(1)
                 }
                 
             }

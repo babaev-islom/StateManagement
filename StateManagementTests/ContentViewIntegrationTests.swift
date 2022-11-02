@@ -1,20 +1,20 @@
 //
-//  StateManagementTests.swift
+//  ContentViewIntegrationTests.swift
 //  StateManagementTests
 //
 //  Created by Islom Babaev on 27/10/22.
 //
 
 import XCTest
-@testable import StateManagement
 import ViewInspector
+@testable import StateManagement
 
 extension ContentView: Inspectable {}
 
 extension LikeButtonView: Inspectable {}
 
 @MainActor
-final class StateManagementTests: XCTestCase {
+final class ContentViewIntegrationTests: XCTestCase {
     
     func test_showSheet_showsSheetOnButtonTap() throws {
         let sut = makeSUT()
@@ -44,6 +44,7 @@ final class StateManagementTests: XCTestCase {
         XCTAssertFalse(try sut.isShowingSheet())
     }
     
+#warning("This test does not pass since adapter creates a `Task` and makes a thread hop")
     func test_onAppear_loadsContent() throws {
         let model1 = ContentModel(id: UUID(), title: "a title", isLiked: false)
         let model2 = ContentModel(id: UUID(), title: "a title", isLiked: false)
@@ -52,7 +53,7 @@ final class StateManagementTests: XCTestCase {
 
         try sut.inspect().find(viewWithId: 55).callOnAppear()
 
-        XCTAssertEqual(try sut.inspect().find(viewWithId: 10).underestimatedCount, 2)
+        XCTAssertEqual(try sut.inspect().find(viewWithId: 11).forEach().underestimatedCount, 2)
     }
     
     private func makeSUT(content: [ContentModel] = []) -> ContentView {
